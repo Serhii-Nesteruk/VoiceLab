@@ -1,2 +1,2 @@
-./dependencies
-./cmake-build-debug
+dependencies/
+cmake-build-debug/
