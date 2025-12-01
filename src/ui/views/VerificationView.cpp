@@ -1,78 +1,48 @@
 #include "VerificationView.h"
-#include <imgui.h>
-
-#include "styles/UiComponentsBuilder.h"
 
 VerificationView::VerificationView(UiActionBus& actionBus)
-    : _actionBus(actionBus)
+    : VoiceScreenViewBase(actionBus)
 {
 }
 
-void VerificationView::render()
+const char* VerificationView::windowTitle() const 
 {
-    ImGuiWindowFlags flags =
-        ImGuiWindowFlags_NoResize |
-        ImGuiWindowFlags_NoMove   |
-        ImGuiWindowFlags_NoCollapse;
+    return "Voice Lab - Verification";
+}
 
-    ImGuiViewport* viewport = ImGui::GetMainViewport();
-    ImGui::SetNextWindowPos(viewport->WorkPos);
-    ImGui::SetNextWindowSize(viewport->WorkSize);
+const char* VerificationView::mainTitle() const 
+{
+    return "Sign in with voice (verification)";
+}
 
-    ImGui::Begin("Voice Lab - Verification", nullptr, flags);
+const char* VerificationView::subtitle() const 
+{
+    return "Speak into the microphone to verify your identity against the enrolled template.";
+}
 
-    ImGui::Dummy(ImVec2(0.0f, 40.0f));
+const char* VerificationView::primaryButtonLabel() const 
+{
+    return "Start verification";
+}
 
-    float regionWidth = ImGui::GetContentRegionAvail().x;
+void VerificationView::onPrimaryButton() 
+{
+    // _actionBus.post(UiAction::StartVerification);
+}
 
-    const char* title = "Sign in with voice (verification)";
-    ImVec2 titleSize = ImGui::CalcTextSize(title);
-    ImGui::SetCursorPosX((regionWidth - titleSize.x) * 0.5f);
-    ImGui::Text("%s", title);
+const char* VerificationView::secondaryButtonLabel() const 
+{
+    return "Use test audio file";
+}
 
-    const char* subtitle =
-        "Speak into the microphone to verify your identity against the enrolled template.";
-    ImVec2 subtitleSize = ImGui::CalcTextSize(subtitle);
-    ImGui::SetCursorPosX((regionWidth - subtitleSize.x) * 0.5f);
-    ImGui::TextDisabled("%s", subtitle);
+void VerificationView::onSecondaryButton() 
+{
+    // _actionBus.post(UiAction::OpenVerificationFileDialog);
+}
 
-    ImGui::Dummy(ImVec2(0.0f, 30.0f));
-
-    UiComponentsBuilder::centeredButton(
-        "Start verification",
-        [this]() {
-            // TODO:
-            // _actionBus.post(UiAction::StartVerification);
-        }
-    );
-
-    ImGui::Dummy(ImVec2(0.0f, 15.0f));
-
-    UiComponentsBuilder::centeredButton(
-        "Use test audio file",
-        [this]() {
-            // TODO:
-            // _actionBus.post(UiAction::OpenVerificationFileDialog);
-        }
-    );
-
-    ImGui::Dummy(ImVec2(0.0f, 30.0f));
-
-    const char* hint =
+const char* VerificationView::hint() const 
+{
+    return
         "The verification stage compares the current voice embedding\n"
         "with the stored template and produces a similarity score / decision.";
-    ImVec2 hintSize = ImGui::CalcTextSize(hint);
-    ImGui::SetCursorPosX((regionWidth - hintSize.x) * 0.5f);
-    ImGui::TextDisabled("%s", hint);
-
-    ImGui::Dummy(ImVec2(0.0f, 20.0f));
-
-    // UiComponentsBuilder::centeredButton(
-    //     "Back to start screen",
-    //     [this]() {
-    //         _actionBus.post(UiAction::OpenMainView);
-    //     }
-    // );
-
-    ImGui::End();
 }

@@ -1,78 +1,48 @@
 #include "EnrolmentView.h"
-#include <imgui.h>
-
-#include "styles/UiComponentsBuilder.h"
 
 EnrolmentView::EnrolmentView(UiActionBus& actionBus)
-    : _actionBus(actionBus)
+    : VoiceScreenViewBase(actionBus)
 {
 }
 
-void EnrolmentView::render()
+const char* EnrolmentView::windowTitle() const 
 {
-    ImGuiWindowFlags flags =
-        ImGuiWindowFlags_NoResize |
-        ImGuiWindowFlags_NoMove   |
-        ImGuiWindowFlags_NoCollapse;
+    return "Voice Lab - Enrolment";
+}
 
-    ImGuiViewport* viewport = ImGui::GetMainViewport();
-    ImGui::SetNextWindowPos(viewport->WorkPos);
-    ImGui::SetNextWindowSize(viewport->WorkSize);
+const char* EnrolmentView::mainTitle() const 
+{
+    return "Create voice profile (enrolment)";
+}
 
-    ImGui::Begin("Voice Lab - Enrolment", nullptr, flags);
+const char* EnrolmentView::subtitle() const 
+{
+    return "Record or import reference speech samples to build a voice template.";
+}
 
-    ImGui::Dummy(ImVec2(0.0f, 40.0f));
+const char* EnrolmentView::primaryButtonLabel() const 
+{
+    return "Record new samples";
+}
 
-    float regionWidth = ImGui::GetContentRegionAvail().x;
+void EnrolmentView::onPrimaryButton() 
+{
+    // _actionBus.post(UiAction::StartEnrolmentRecording);
+}
 
-    const char* title = "Create voice profile (enrolment)";
-    ImVec2 titleSize = ImGui::CalcTextSize(title);
-    ImGui::SetCursorPosX((regionWidth - titleSize.x) * 0.5f);
-    ImGui::Text("%s", title);
+const char* EnrolmentView::secondaryButtonLabel() const 
+{
+    return "Import audio files";
+}
 
-    const char* subtitle =
-        "Record or import reference speech samples to build a voice template.";
-    ImVec2 subtitleSize = ImGui::CalcTextSize(subtitle);
-    ImGui::SetCursorPosX((regionWidth - subtitleSize.x) * 0.5f);
-    ImGui::TextDisabled("%s", subtitle);
+void EnrolmentView::onSecondaryButton() 
+{
+    // _actionBus.post(UiAction::OpenEnrolmentImport);
+}
 
-    ImGui::Dummy(ImVec2(0.0f, 30.0f));
-
-    UiComponentsBuilder::centeredButton(
-        "Record new samples",
-        [this]() {
-            // TODO:
-            // _actionBus.post(UiAction::StartEnrolmentRecording);
-        }
-    );
-
-    ImGui::Dummy(ImVec2(0.0f, 15.0f));
-
-    UiComponentsBuilder::centeredButton(
-        "Import audio files",
-        [this]() {
-            // TODO:
-            // _actionBus.post(UiAction::OpenEnrolmentImport);
-        }
-    );
-
-    ImGui::Dummy(ImVec2(0.0f, 30.0f));
-
-    const char* hint =
+const char* EnrolmentView::hint() const 
+{
+    return
         "During enrolment the system extracts embeddings (e.g., x-vectors)\n"
         "from several recordings and aggregates them into a stable voice template.";
-    ImVec2 hintSize = ImGui::CalcTextSize(hint);
-    ImGui::SetCursorPosX((regionWidth - hintSize.x) * 0.5f);
-    ImGui::TextDisabled("%s", hint);
-
-    ImGui::Dummy(ImVec2(0.0f, 20.0f));
-
-    // UiComponentsBuilder::centeredButton(
-    //     "Back to start screen",
-    //     [this]() {
-    //         _actionBus.post(UiAction::OpenMainView);
-    //     }
-    // );
-
-    ImGui::End();
 }

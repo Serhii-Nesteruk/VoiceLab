@@ -1,13 +1,19 @@
 #pragma once
-#include "IView.h"
+
+#include "VoiceScreenViewBase.h"
+
 #include "UiActionBus.h"
 
-class VerificationView : public IView {
+class VerificationView final : public VoiceScreenViewBase {
 public:
     explicit VerificationView(UiActionBus& actionBus);
 
-    void render() override;
-
-private:
-    UiActionBus& _actionBus;
+    [[nodiscard]] const char* windowTitle() const override;
+    [[nodiscard]] const char* mainTitle() const override;
+    [[nodiscard]] const char* subtitle() const override;
+    [[nodiscard]] const char* primaryButtonLabel() const override;
+    void onPrimaryButton() override;
+    [[nodiscard]] const char* secondaryButtonLabel() const override;
+    void onSecondaryButton() override;
+    [[nodiscard]] const char* hint() const override;
 };
