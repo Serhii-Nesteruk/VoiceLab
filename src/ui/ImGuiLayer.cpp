@@ -1,5 +1,8 @@
 #include "ImGuiLayer.h"
 
+#include <filesystem>
+#include <iostream>
+
 #include "styles/UiTheme.h"
 
 ImGuiLayer::ImGuiLayer(GlfwWindow& window)
@@ -9,6 +12,17 @@ ImGuiLayer::ImGuiLayer(GlfwWindow& window)
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
+
+    ImFontConfig fontConfig;
+    fontConfig.OversampleH = fontConfig.OversampleV = 2;
+
+    // TODO: hardcoded font path - move to config / assets manager
+    io.Fonts->AddFontFromFileTTF(
+        "../assets/fonts/DejaVuSans.ttf",
+        18.f,
+        &fontConfig,
+        io.Fonts->GetGlyphRangesDefault()
+    );
 
     UiTheme::applyDarkTheme();
 
