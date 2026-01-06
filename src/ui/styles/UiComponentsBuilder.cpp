@@ -28,3 +28,11 @@ void UiComponentsBuilder::centeredButton(const char* label, const std::function<
         if (onClick) onClick();
     }
 }
+
+void UiComponentsBuilder::topLeftButton(const char* label, const std::function<void()>& onClick,
+    const ImVec2& offset /* = ImVec(10, 150)*/)
+{
+    ImGui::SetCursorPos(offset);
+
+    defaultButton(label, onClick);
+}

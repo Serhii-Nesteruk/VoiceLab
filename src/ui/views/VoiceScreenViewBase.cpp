@@ -18,6 +18,11 @@ void VoiceScreenViewBase::render()
 
         float regionWidth = ImGui::GetContentRegionAvail().x;
 
+        UiComponentsBuilder::topLeftButton(
+            "< Powrót",
+            [this](){ _actionBus.post(UiAction::OpenMainView); }
+        );
+
         // Title
         {
             const char* title = mainTitle();
