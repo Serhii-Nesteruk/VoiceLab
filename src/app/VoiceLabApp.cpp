@@ -28,7 +28,7 @@ void VoiceLabApp::render()
         break;
     }
 
-    FileDialog::renderFileDialog(AppState::currentFileDialogId);
+    FileDialog::renderFileDialog(AppState::currentFileDialogId, AppState::currentFileDialogMode);
 }
 
 bool VoiceLabApp::shouldClose() const

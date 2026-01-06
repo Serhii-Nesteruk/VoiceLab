@@ -1,7 +1,7 @@
 #include "FileDialog.h"
 
 #include "AppState.h"
-#include "EnrolmentView.h"
+
 #include "ImGuiFileDialog.h"
 
 void FileDialog::initFileDialog(const FileDialogId& id)
@@ -9,17 +9,19 @@ void FileDialog::initFileDialog(const FileDialogId& id)
     _selectedFiles.try_emplace(id, FilePath());
 }
 
-void FileDialog::renderFileDialog(const FileDialogId& id)
+void FileDialog::renderFileDialog(const FileDialogId& id, const Mode& mode)
 {
     if (!AppState::openFileDialog) return;
 
     IGFD::FileDialogConfig config;
     config.path = ".";
 
+    const char* filters = (mode == Mode::File) ? ".lvf,.wav,.bin" : nullptr;
+
     ImGuiFileDialog::Instance()->OpenDialog(
         id,
-        "Wybierz plik",
-        ".lvf,.wav,.bin",
+        (mode == Mode::File) ? "Wybierz plik" : "Wybierz folder",
+        filters,
         config
     );
 
@@ -27,7 +29,20 @@ void FileDialog::renderFileDialog(const FileDialogId& id)
     {
         if (ImGuiFileDialog::Instance()->IsOk())
         {
-            _selectedFiles.insert_or_assign(id,ImGuiFileDialog::Instance()->GetFilePathName());
+            if (mode == Mode::Directory)
+            {
+                _selectedFiles.insert_or_assign(
+                    id,
+                    ImGuiFileDialog::Instance()->GetCurrentPath()
+                );
+            }
+            else
+            {
+                _selectedFiles.insert_or_assign(
+                    id,
+                    ImGuiFileDialog::Instance()->GetFilePathName()
+                );
+            }
         }
 
         ImGuiFileDialog::Instance()->Close();

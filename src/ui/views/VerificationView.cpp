@@ -48,6 +48,7 @@ const char* VerificationView::primaryButtonLabel() const
 void VerificationView::onPrimaryButton() 
 {
     AppState::currentFileDialogId = "ChooseModelSpeaker";
+    AppState::currentFileDialogMode = FileDialog::Mode::File;
     _actionBus.post(UiAction::OpenFileDialog);
 }
 
@@ -59,6 +60,7 @@ const char* VerificationView::secondaryButtonLabel() const
 void VerificationView::onSecondaryButton() 
 {
     AppState::currentFileDialogId = "ChooseSpeakerToVerify";
+    AppState::currentFileDialogMode = FileDialog::Mode::File;
     _actionBus.post(UiAction::OpenFileDialog);
 }
 

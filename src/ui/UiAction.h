@@ -10,5 +10,6 @@ enum class UiAction
 
     ExitApplication,
 
-    VerifySpeakers
+    VerifySpeakers,
+    CreateSpeakerModel,
 };

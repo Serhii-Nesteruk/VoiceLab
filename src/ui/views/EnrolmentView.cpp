@@ -2,6 +2,8 @@
 
 #include <filesystem>
 
+#include "AppState.h"
+
 EnrolmentView::EnrolmentView(UiActionBus& actionBus)
     : VoiceScreenViewBase(actionBus)
 {
@@ -24,31 +26,33 @@ std::string EnrolmentView::subtitle() const
 
 const char* EnrolmentView::primaryButtonLabel() const 
 {
-    return "Wybierz";
+    return "Wybierz folder z wzorcami głosowymi użytkownika";
 }
 
 void EnrolmentView::onPrimaryButton() 
 {
-    // _actionBus.post(UiAction::StartEnrolmentRecording);
+    AppState::currentFileDialogId = "EnrolmentUserReferenceFolder";
+    AppState::currentFileDialogMode = FileDialog::Mode::Directory;
+    _actionBus.post(UiAction::OpenFileDialog);
 }
 
 const char* EnrolmentView::secondaryButtonLabel() const 
 {
-    return "Import audio files";
+    return nullptr;
 }
 
 void EnrolmentView::onSecondaryButton() 
 {
-    // _actionBus.post(UiAction::OpenEnrolmentImport);
 }
 
 const char* EnrolmentView::thirdButtonLabel() const
 {
-    return "";
+    return "Stwórz wzór wybranego użytkownika";
 }
 
 void EnrolmentView::onThirdButton()
 {
+    _actionBus.post(UiAction::CreateSpeakerModel);
 }
 
 const char* EnrolmentView::hint() const 

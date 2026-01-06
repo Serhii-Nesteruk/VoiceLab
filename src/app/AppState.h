@@ -16,4 +16,6 @@ struct AppState
     // File Dialog
     inline static bool openFileDialog = false;
     inline static std::string currentFileDialogId{};
+
+    inline static FileDialog::Mode currentFileDialogMode = FileDialog::Mode::File;
 };

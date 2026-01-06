@@ -38,25 +38,37 @@ void VoiceScreenViewBase::render()
         ImGui::Dummy(ImVec2(0.0f, 30.0f));
 
         // Primary button
-        UiComponentsBuilder::centeredButton(
-            primaryButtonLabel(),
-            [this]() { onPrimaryButton(); }
-        );
+        const auto primaryBtnLabel = primaryButtonLabel();
+        if (primaryBtnLabel && primaryBtnLabel[0] != '\0')
+        {
+            UiComponentsBuilder::centeredButton(
+                primaryButtonLabel(),
+                [this]() { onPrimaryButton(); }
+            );
+        }
 
         ImGui::Dummy(ImVec2(0.0f, 15.0f));
 
         // Secondary button
-        UiComponentsBuilder::centeredButton(
-            secondaryButtonLabel(),
-            [this]() { onSecondaryButton(); }
-        );
+        const auto secondaryBtnLabel = secondaryButtonLabel();
+        if (secondaryBtnLabel && secondaryBtnLabel[0] != '\0')
+        {
+            UiComponentsBuilder::centeredButton(
+                secondaryButtonLabel(),
+                [this]() { onSecondaryButton(); }
+            );
+        }
 
         ImGui::Dummy(ImVec2(0.0f, 30.0f));
 
-        UiComponentsBuilder::centeredButton(
-           thirdButtonLabel(),
-           [this]() { onThirdButton(); }
-       );
+        const auto thirdBtnLabel = thirdButtonLabel();
+        if (thirdBtnLabel && thirdBtnLabel[0] != '\0')
+        {
+            UiComponentsBuilder::centeredButton(
+               thirdButtonLabel(),
+               [this]() { onThirdButton(); }
+           );
+        }
 
         ImGui::Dummy(ImVec2(0.0f, 30.0f));
 
