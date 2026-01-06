@@ -27,7 +27,7 @@ void MainWindowView::renderStartScreen()
 
     ImGui::Begin("Voice Lab", nullptr, flags);
 
-    ImGui::Dummy(ImVec2(0.0f, 40.0f));
+    ImGui::Dummy(ImVec2(0.0f, 120.0f));
 
     float regionWidth = ImGui::GetContentRegionAvail().x;
 
@@ -44,7 +44,7 @@ void MainWindowView::renderStartScreen()
     ImGui::Dummy(ImVec2(0.0f, 30.0f));
 
     UiComponentsBuilder::centeredButton(
-        "Sign in with voice (verification)",
+        "Weryfikacja",
         [this]() {
              _actionBus.post(UiAction::OpenVerificationView);
         }
@@ -53,7 +53,7 @@ void MainWindowView::renderStartScreen()
     ImGui::Dummy(ImVec2(0.0f, 15.0f));
 
     UiComponentsBuilder::centeredButton(
-        "Create voice profile (enrolment)",
+        "Rejestracja użytkownika (enrolment)",
         [this]() {
             _actionBus.post(UiAction::OpenEnrolmentView);
         }

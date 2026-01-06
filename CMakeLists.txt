@@ -8,6 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(DEPENDENCIES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies")
 set(VOICEFEAT_ROOT   "../untitled2/")
 set(IMGUI_ROOT "${DEPENDENCIES_DIR}/imgui/imgui")
+set(FILE_DIALOG_ROOT "${DEPENDENCIES_DIR}/FileDialog")
 
 set(ImGui_SOURCES
         ${IMGUI_ROOT}/imgui.cpp
@@ -28,9 +29,14 @@ file(GLOB_RECURSE voiceid_SOURCES
         "${CMAKE_SOURCE_DIR}/src/ui/styles/*.cpp"
 )
 
+set(FileDialog_SOURCES
+    "${FILE_DIALOG_ROOT}/ImGuiFileDialog.cpp"
+)
+
 add_executable(voice_lab
         ${ImGui_SOURCES}
         ${voiceid_SOURCES}
+        ${FileDialog_SOURCES}
 )
 
 find_package(OpenGL REQUIRED)
@@ -45,6 +51,7 @@ target_include_directories(voice_lab PRIVATE
         "${GLFW3_INCLUDE_DIRS}"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/ui/"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/app/"
+        "${FILE_DIALOG_ROOT}/"
 )
 
 add_library(voicefeat STATIC IMPORTED)

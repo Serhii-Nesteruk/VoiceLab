@@ -28,7 +28,8 @@ void VoiceScreenViewBase::render()
 
         // Subtitle
         {
-            const char* subtitleText = subtitle();
+            std::string subtitleStr = subtitle();
+            const char* subtitleText = subtitleStr.c_str();
             ImVec2 subtitleSize = ImGui::CalcTextSize(subtitleText);
             ImGui::SetCursorPosX((regionWidth - subtitleSize.x) * 0.5f);
             ImGui::TextDisabled("%s", subtitleText);
@@ -49,6 +50,13 @@ void VoiceScreenViewBase::render()
             secondaryButtonLabel(),
             [this]() { onSecondaryButton(); }
         );
+
+        ImGui::Dummy(ImVec2(0.0f, 30.0f));
+
+        UiComponentsBuilder::centeredButton(
+           thirdButtonLabel(),
+           [this]() { onThirdButton(); }
+       );
 
         ImGui::Dummy(ImVec2(0.0f, 30.0f));
 

@@ -5,5 +5,10 @@ enum class UiAction
     OpenEnrolmentView,
     OpenVerificationView,
     OpenMainView,
-    ExitApplication
+
+    OpenFileDialog,
+
+    ExitApplication,
+
+    VerifySpeakers
 };

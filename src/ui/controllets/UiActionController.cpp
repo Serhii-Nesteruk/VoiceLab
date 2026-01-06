@@ -3,6 +3,10 @@
 #include <iostream>
 #include <bits/ostream.tcc>
 
+#include <ImGuiFileDialog.h>
+
+#include "views/FileDialog.h"
+
 UiActionController::UiActionController(UiActionBus& actionBus, UiSubscriptionPool& subPool)
     : _actionBus(actionBus), _subPool(subPool)
 {
@@ -20,7 +24,6 @@ void UiActionController::handleAction(UiAction action)
     {
     case UiAction::OpenEnrolmentView:
         AppState::currentView = ViewId::Enrolment;
-        std::cout << "Enrl view" << std::endl;
         break;
     case UiAction::OpenVerificationView:
         AppState::currentView = ViewId::Verification;
@@ -30,6 +33,14 @@ void UiActionController::handleAction(UiAction action)
         break;
     case UiAction::ExitApplication:
         AppState::isRunning = false;
+        break;
+    case UiAction::OpenFileDialog:
+        if (AppState::currentFileDialogId.empty())
+        {
+            throw std::runtime_error("File dialog id not provided");
+        }
+        FileDialog::initFileDialog(AppState::currentFileDialogId);
+        AppState::openFileDialog = true;
         break;
     }
 }

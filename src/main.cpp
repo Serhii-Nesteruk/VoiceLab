@@ -5,7 +5,7 @@
 int main()
 {
     try {
-        GlfwWindow window(1280, 720, "Voice Lab");
+        GlfwWindow window(1480, 920, "Voice Lab");
         ImGuiLayer imgui(window);
         VoiceLabApp app(window);
 

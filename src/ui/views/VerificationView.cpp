@@ -1,5 +1,12 @@
 #include "VerificationView.h"
 
+#include <filesystem>
+#include <iostream>
+#include <string>
+
+#include "AppState.h"
+#include "FileDialog.h"
+
 VerificationView::VerificationView(UiActionBus& actionBus)
     : VoiceScreenViewBase(actionBus)
 {
@@ -15,29 +22,54 @@ const char* VerificationView::mainTitle() const
     return "Sign in with voice (verification)";
 }
 
-const char* VerificationView::subtitle() const 
+std::string VerificationView::subtitle() const
 {
-    return "Speak into the microphone to verify your identity against the enrolled template.";
+    std::string modelSpeakerPath = FileDialog::getSelectedFileByDialogId("ChooseModelSpeaker");
+    std::string speakerToVerifyPath = FileDialog::getSelectedFileByDialogId("ChooseSpeakerToVerify");
+
+    const std::string modelSpeakerName =
+           modelSpeakerPath.empty() ? "" : extractFileNameFromPath(modelSpeakerPath);
+
+    const std::string speakerToVerifyName =
+        speakerToVerifyPath.empty() ? "" : extractFileNameFromPath(speakerToVerifyPath);
+
+    std::cout << speakerToVerifyName << std::endl;
+    std::cout << modelSpeakerName << std::endl;
+
+    return "Wybrany uzytkownik wzorcowy: " + modelSpeakerName + " "
+           "Wybrany uzytkownik do weryfikacji: " + speakerToVerifyName;
 }
 
-const char* VerificationView::primaryButtonLabel() const 
+const char* VerificationView::primaryButtonLabel() const
 {
-    return "Start verification";
+    return "Wybierz użytkownika wzorcowego";
 }
 
 void VerificationView::onPrimaryButton() 
 {
-    // _actionBus.post(UiAction::StartVerification);
+    AppState::currentFileDialogId = "ChooseModelSpeaker";
+    _actionBus.post(UiAction::OpenFileDialog);
 }
 
 const char* VerificationView::secondaryButtonLabel() const 
 {
-    return "Use test audio file";
+    return "Wybierz użytkownika do weryfikacji";
 }
 
 void VerificationView::onSecondaryButton() 
 {
-    // _actionBus.post(UiAction::OpenVerificationFileDialog);
+    AppState::currentFileDialogId = "ChooseSpeakerToVerify";
+    _actionBus.post(UiAction::OpenFileDialog);
+}
+
+const char* VerificationView::thirdButtonLabel() const
+{
+    return "Weryfikuj";
+}
+
+void VerificationView::onThirdButton()
+{
+    _actionBus.post(UiAction::VerifySpeakers);
 }
 
 const char* VerificationView::hint() const 
@@ -45,4 +77,9 @@ const char* VerificationView::hint() const
     return
         "The verification stage compares the current voice embedding\n"
         "with the stored template and produces a similarity score / decision.";
+}
+
+std::string VerificationView::extractFileNameFromPath(const std::string& filePath)
+{
+    return std::filesystem::path(filePath).filename().string();
 }

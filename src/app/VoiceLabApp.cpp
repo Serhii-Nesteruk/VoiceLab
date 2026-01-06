@@ -1,6 +1,6 @@
 #include "VoiceLabApp.h"
-
 #include "GlfwWindow.h"
+#include "views/FileDialog.h"
 
 VoiceLabApp::VoiceLabApp(GlfwWindow& window)
     : _window(window),
@@ -27,6 +27,8 @@ void VoiceLabApp::render()
         _verificationView.render();
         break;
     }
+
+    FileDialog::renderFileDialog(AppState::currentFileDialogId);
 }
 
 bool VoiceLabApp::shouldClose() const
