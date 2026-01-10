@@ -71,16 +71,8 @@ const char* VerificationView::thirdButtonLabel() const
 
 void VerificationView::onThirdButton()
 {
-    _actionBus.post(UiAction::VerifySpeakers);
+    _actionBus.post(UiAction::StartSpeakerVerification);
 }
-
-const char* VerificationView::hint() const 
-{
-    return
-        "The verification stage compares the current voice embedding\n"
-        "with the stored template and produces a similarity score / decision.";
-}
-
 std::string VerificationView::extractFileNameFromPath(const std::string& filePath)
 {
     return std::filesystem::path(filePath).filename().string();

@@ -17,7 +17,6 @@ public:
     void onSecondaryButton() override;
     [[nodiscard]] const char* thirdButtonLabel() const override;
     void onThirdButton() override;
-    [[nodiscard]] const char* hint() const override;
 
 private:
     [[nodiscard]] static std::string extractFileNameFromPath(const std::string& filePath);

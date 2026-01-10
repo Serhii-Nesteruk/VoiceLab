@@ -42,5 +42,16 @@ void UiActionController::handleAction(UiAction action)
         FileDialog::initFileDialog(AppState::currentFileDialogId);
         AppState::openFileDialog = true;
         break;
+    case UiAction::StartSpeakerModelCreation:
+        AppState::isBusy = true;
+        // start
+        break;
+    case UiAction::StartSpeakerVerification:
+        AppState::isBusy = true;
+        // start
+        break;
+    default:
+        std::cerr << "Unknown action type" << std::endl;
+        break;
     }
 }

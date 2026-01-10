@@ -52,14 +52,7 @@ const char* EnrolmentView::thirdButtonLabel() const
 
 void EnrolmentView::onThirdButton()
 {
-    _actionBus.post(UiAction::CreateSpeakerModel);
-}
-
-const char* EnrolmentView::hint() const 
-{
-    return
-        "During enrolment the system extracts embeddings (e.g., x-vectors)\n"
-        "from several recordings and aggregates them into a stable voice template.";
+    _actionBus.post(UiAction::StartSpeakerModelCreation);
 }
 
 std::string EnrolmentView::extractFileNameFromPath(const std::string& filePath)

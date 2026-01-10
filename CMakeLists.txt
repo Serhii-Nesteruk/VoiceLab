@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(DEPENDENCIES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies")
-set(VOICEFEAT_ROOT   "../untitled2/")
 set(IMGUI_ROOT "${DEPENDENCIES_DIR}/imgui/imgui")
 set(FILE_DIALOG_ROOT "${DEPENDENCIES_DIR}/FileDialog")
 
@@ -33,19 +32,23 @@ set(FileDialog_SOURCES
     "${FILE_DIALOG_ROOT}/ImGuiFileDialog.cpp"
 )
 
+set(CMAKE_PREFIX_PATH
+        "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/libvoicefeat-install"
+        ${CMAKE_PREFIX_PATH}
+)
+
 add_executable(voice_lab
         ${ImGui_SOURCES}
         ${voiceid_SOURCES}
         ${FileDialog_SOURCES}
 )
 
+find_package(libvoicefeat CONFIG REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GLFW3 REQUIRED glfw3)
 
 target_include_directories(voice_lab PRIVATE
-        "${VOICEFEAT_ROOT}/include"
-        "${VOICEFEAT_ROOT}/third_party/minimp3"
         "${IMGUI_ROOT}"
         "${IMGUI_ROOT}/backends"
         "${GLFW3_INCLUDE_DIRS}"
@@ -54,13 +57,9 @@ target_include_directories(voice_lab PRIVATE
         "${FILE_DIALOG_ROOT}/"
 )
 
-add_library(voicefeat STATIC IMPORTED)
-set_target_properties(voicefeat PROPERTIES
-        IMPORTED_LOCATION "${DEPENDENCIES_DIR}/libvoicefeat.a"
-)
 
 target_link_libraries(voice_lab PRIVATE
-        voicefeat
+        libvoicefeat::libvoicefeat
         ${GLFW3_LIBRARIES}
         OpenGL::GL
 )

@@ -18,4 +18,8 @@ struct AppState
     inline static std::string currentFileDialogId{};
 
     inline static FileDialog::Mode currentFileDialogMode = FileDialog::Mode::File;
+
+    inline static bool isBusy = false;
+    inline static float progress = 0.f;
+
 };

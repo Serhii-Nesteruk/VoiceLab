@@ -59,14 +59,5 @@ void MainWindowView::renderStartScreen()
         }
     );
 
-    ImGui::Dummy(ImVec2(0.0f, 30.0f));
-
-    const char* hint =
-        "The enrolment stage creates a reference voice template.\n"
-        "The verification stage compares the current voice against that template.";
-    ImVec2 hintSize = ImGui::CalcTextSize(hint);
-    ImGui::SetCursorPosX((regionWidth - hintSize.x) * 0.5f);
-    ImGui::TextDisabled("%s", hint);
-
     ImGui::End();
 }

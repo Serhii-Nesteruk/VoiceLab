@@ -4,12 +4,14 @@
 
 int main()
 {
-    try {
+    try
+    {
         GlfwWindow window(1480, 920, "Voice Lab");
         ImGuiLayer imgui(window);
         VoiceLabApp app(window);
 
-        while (!app.shouldClose()) {
+        while (!app.shouldClose())
+        {
             window.pollEvents();
 
             imgui.beginFrame();
@@ -18,7 +20,9 @@ int main()
 
             imgui.endFrame();
         }
-    } catch (const std::exception& ex) {
+    }
+    catch (const std::exception& ex)
+    {
         std::fprintf(stderr, "Fatal error: %s\n", ex.what());
         return 1;
     }

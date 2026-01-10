@@ -75,18 +75,6 @@ void VoiceScreenViewBase::render()
            );
         }
 
-        ImGui::Dummy(ImVec2(0.0f, 30.0f));
-
-        // Hint
-        {
-            const char* hintText = hint();
-            ImVec2 hintSize = ImGui::CalcTextSize(hintText);
-            ImGui::SetCursorPosX((regionWidth - hintSize.x) * 0.5f);
-            ImGui::TextDisabled("%s", hintText);
-        }
-
-        ImGui::Dummy(ImVec2(0.0f, 20.0f));
-
         ImGui::End();
     }
 

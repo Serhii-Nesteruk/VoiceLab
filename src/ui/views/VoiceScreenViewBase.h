@@ -31,6 +31,4 @@ protected:
 
     [[nodiscard]] virtual const char* thirdButtonLabel() const = 0;
     virtual void        onThirdButton()          = 0;
-
-    [[nodiscard]] virtual const char* hint() const = 0;
 };
